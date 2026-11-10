@@ -107,13 +107,6 @@ directory. A mapped image is not loaded by the kernel loader, so the file does n
 need a signature the loader would check; running it through DSE or a test-signing
 boot is the loader's problem, not this project's.
 
-## Limits
-
-- no unmap path: the image lives until the mapping is released or the machine reboots
-- one instance per boot; a second `DriverEntry` returns `STATUS_ALREADY_REGISTERED`
-- offsets in the map slot are build-specific; a Windows update invalidates them
-- ETW stages are stubs (`STATUS_NOT_SUPPORTED`) and report their state through `hide_err`
-
 ## Disclaimer
 
 Kernel research and testing only. Do not run this on a machine you do not own.
