@@ -1,0 +1,5 @@
+* text=auto
+*.cxx text eol=lf
+*.hxx text eol=lf
+*.vcxproj text eol=crlf
+*.md text eol=lf

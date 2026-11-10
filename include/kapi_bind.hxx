@@ -1,0 +1,48 @@
+#pragma once
+
+#include "kapi.hxx"
+
+extern cs_kapi g_kapi;
+
+#define CS_FN(id, type) ((type)(ULONG_PTR)g_kapi.fn[(id)])
+
+#define KeWaitForSingleObject CS_FN(cs_kapi_KeWaitForSingleObject, NTSTATUS (NTAPI*)(PVOID, KWAIT_REASON, KPROCESSOR_MODE, BOOLEAN, PLARGE_INTEGER))
+#define PsCreateSystemThread CS_FN(cs_kapi_PsCreateSystemThread, NTSTATUS (NTAPI*)(PHANDLE, ULONG, POBJECT_ATTRIBUTES, HANDLE, PCLIENT_ID, PKSTART_ROUTINE, PVOID))
+#define PsTerminateSystemThread CS_FN(cs_kapi_PsTerminateSystemThread, NTSTATUS (NTAPI*)(NTSTATUS))
+#define IoGetCurrentProcess CS_FN(cs_kapi_IoGetCurrentProcess, PEPROCESS (NTAPI*)(void))
+#define ObReferenceObjectByHandle CS_FN(cs_kapi_ObReferenceObjectByHandle, NTSTATUS (NTAPI*)(HANDLE, ACCESS_MASK, POBJECT_TYPE, KPROCESSOR_MODE, PVOID*, POBJECT_HANDLE_INFORMATION))
+#define ObfDereferenceObject CS_FN(cs_kapi_ObfDereferenceObject, LONG_PTR (FASTCALL*)(PVOID))
+#define ZwClose CS_FN(cs_kapi_ZwClose, NTSTATUS (NTAPI*)(HANDLE))
+#define MmGetPhysicalAddress CS_FN(cs_kapi_MmGetPhysicalAddress, PHYSICAL_ADDRESS (NTAPI*)(PVOID))
+#define MmIsAddressValid CS_FN(cs_kapi_MmIsAddressValid, BOOLEAN (NTAPI*)(PVOID))
+#define MmMapViewInSystemSpace CS_FN(cs_kapi_MmMapViewInSystemSpace, NTSTATUS (NTAPI*)(PVOID, PVOID*, PSIZE_T))
+#define MmUnmapViewInSystemSpace CS_FN(cs_kapi_MmUnmapViewInSystemSpace, NTSTATUS (NTAPI*)(PVOID))
+#define PsGetProcessCreateTimeQuadPart CS_FN(cs_kapi_PsGetProcessCreateTimeQuadPart, LONGLONG (NTAPI*)(PEPROCESS))
+#define PsGetProcessId CS_FN(cs_kapi_PsGetProcessId, HANDLE (NTAPI*)(PEPROCESS))
+#define ZwOpenProcess CS_FN(cs_kapi_ZwOpenProcess, NTSTATUS (NTAPI*)(PHANDLE, ACCESS_MASK, POBJECT_ATTRIBUTES, PCLIENT_ID))
+#define PsLookupProcessByProcessId CS_FN(cs_kapi_PsLookupProcessByProcessId, NTSTATUS (NTAPI*)(HANDLE, PEPROCESS*))
+#define ObOpenObjectByPointer CS_FN(cs_kapi_ObOpenObjectByPointer, NTSTATUS (NTAPI*)(PVOID, ULONG, PACCESS_STATE, ACCESS_MASK, POBJECT_TYPE, KPROCESSOR_MODE, PHANDLE))
+#define ZwDuplicateObject CS_FN(cs_kapi_ZwDuplicateObject, NTSTATUS (NTAPI*)(HANDLE, HANDLE, HANDLE, PHANDLE, ACCESS_MASK, ULONG, ULONG))
+#define ZwWaitForSingleObject CS_FN(cs_kapi_ZwWaitForSingleObject, NTSTATUS (NTAPI*)(HANDLE, BOOLEAN, PLARGE_INTEGER))
+#define ExEventObjectType ((POBJECT_TYPE*)(ULONG_PTR)g_kapi.fn[cs_kapi_ExEventObjectType])
+#define KeSetEvent CS_FN(cs_kapi_KeSetEvent, LONG (NTAPI*)(PKEVENT, KPRIORITY, BOOLEAN))
+#define RtlInitUnicodeString CS_FN(cs_kapi_RtlInitUnicodeString, VOID (NTAPI*)(PUNICODE_STRING, PCWSTR))
+#define MmGetSystemRoutineAddress CS_FN(cs_kapi_MmGetSystemRoutineAddress, PVOID (NTAPI*)(PUNICODE_STRING))
+#define RtlCompareMemory CS_FN(cs_kapi_RtlCompareMemory, SIZE_T (NTAPI*)(const VOID*, const VOID*, SIZE_T))
+#define KeGetCurrentIrql CS_FN(cs_kapi_KeGetCurrentIrql, KIRQL (NTAPI*)(void))
+#define ExFreePoolWithTag CS_FN(cs_kapi_ExFreePoolWithTag, VOID (NTAPI*)(PVOID, ULONG))
+#undef MmMapLockedPagesSpecifyCache
+#define MmMapLockedPagesSpecifyCache(mdl, mode, cache, addr, bug, pri) CS_FN(cs_kapi_MmMapLockedPagesSpecifyCache, PVOID (NTAPI*)(PMDL, KPROCESSOR_MODE, MEMORY_CACHING_TYPE, PVOID, ULONG, ULONG))((mdl), (mode), (cache), (addr), (bug), (pri) | ExDefaultMdlProtection)
+#define MmUnmapLockedPages CS_FN(cs_kapi_MmUnmapLockedPages, VOID (NTAPI*)(PVOID, PMDL))
+#define MmGetPhysicalMemoryRanges CS_FN(cs_kapi_MmGetPhysicalMemoryRanges, PPHYSICAL_MEMORY_RANGE (NTAPI*)(void))
+#define MmGetVirtualForPhysical CS_FN(cs_kapi_MmGetVirtualForPhysical, PVOID (NTAPI*)(PHYSICAL_ADDRESS))
+#define PsGetProcessSectionBaseAddress CS_FN(cs_kapi_PsGetProcessSectionBaseAddress, PVOID (NTAPI*)(PEPROCESS))
+#define PsGetProcessPeb CS_FN(cs_kapi_PsGetProcessPeb, PVOID (NTAPI*)(PEPROCESS))
+#define PsThreadType ((POBJECT_TYPE*)(ULONG_PTR)g_kapi.fn[cs_kapi_PsThreadType])
+#define KeQueryPerformanceCounter CS_FN(cs_kapi_KeQueryPerformanceCounter, LARGE_INTEGER (NTAPI*)(PLARGE_INTEGER))
+#define RtlGetVersion CS_FN(cs_kapi_RtlGetVersion, NTSTATUS (NTAPI*)(PRTL_OSVERSIONINFOW))
+#define IofCompleteRequest CS_FN(cs_kapi_IofCompleteRequest, VOID (NTAPI*)(PIRP, CCHAR))
+#define KeInitializeMutex CS_FN(cs_kapi_KeInitializeMutex, VOID (NTAPI*)(PKMUTEX, ULONG))
+#define KeInitializeEvent CS_FN(cs_kapi_KeInitializeEvent, VOID (NTAPI*)(PKEVENT, EVENT_TYPE, BOOLEAN))
+#define KeClearEvent CS_FN(cs_kapi_KeClearEvent, VOID (NTAPI*)(PKEVENT))
+#define ExAllocatePoolWithTag CS_FN(cs_kapi_ExAllocatePoolWithTag, PVOID (NTAPI*)(POOL_TYPE, SIZE_T, ULONG))

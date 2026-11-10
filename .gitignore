@@ -1,0 +1,10 @@
+build/
+.vs/
+*.user
+*.sys
+*.pdb
+*.obj
+*.log
+*.ilk
+*.exp
+*.lib
