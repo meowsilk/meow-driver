@@ -114,11 +114,6 @@ boot is the loader's problem, not this project's.
 - offsets in the map slot are build-specific; a Windows update invalidates them
 - ETW stages are stubs (`STATUS_NOT_SUPPORTED`) and report their state through `hide_err`
 
-## Credits
-
-`src/hde64.cxx` and `include/hde64.hxx` are the HDE64 length disassembler by
-Vyacheslav Patkov (BSD style), kept under its original terms.
-
 ## Disclaimer
 
 Kernel research and testing only. Do not run this on a machine you do not own.
